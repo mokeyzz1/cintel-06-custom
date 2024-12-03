@@ -1,1 +1,8 @@
-
+shiny
+shinylive
+shinywidgets
+pandas
+numpy
+plotly
+faicons
+shiny[widgets]
