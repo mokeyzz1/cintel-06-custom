@@ -6,3 +6,4 @@ numpy
 plotly
 faicons
 shiny[widgets]
+seaborn

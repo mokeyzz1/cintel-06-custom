@@ -6,16 +6,15 @@ from shiny import reactive, render
 from shiny.express import input, ui
 from pathlib import Path
 import pandas as pd
-import plotly.express as px
+import seaborn as sns
 from shinywidgets import render_plotly
-from faicons import icon_svg
 
 # --------------------------------------------
 # Load Data
 # --------------------------------------------
 
 # Path to the dataset
-data_path = Path(__file__).parent / "../data/symbols_valid_meta.csv"
+data_path = Path(__file__).parent / "symbols_valid_meta.csv"
 df = pd.read_csv(data_path)
 
 # --------------------------------------------
@@ -61,21 +60,21 @@ with ui.sidebar(title="Filters", open="open"):
 
 # Layout with Value Boxes
 with ui.layout_column_wrap(fill=False):
-    with ui.value_box(showcase=icon_svg("chart-line"), theme="bg-gradient-green-blue"):
+    with ui.value_box():
         "Number of Stocks"
 
         @render.text
         def stock_count():
             return f"{filtered_df().shape[0]} stocks"
 
-    with ui.value_box(showcase=icon_svg("building-columns"), theme="bg-gradient-blue-purple"):
+    with ui.value_box():
         "Unique Exchanges"
 
         @render.text
         def exchange_count():
             return f"{filtered_df()['Listing Exchange'].nunique()} exchanges"
 
-    with ui.value_box(showcase=icon_svg("tags"), theme="bg-gradient-yellow-orange"):
+    with ui.value_box():
         "Market Categories"
 
         @render.text
@@ -85,31 +84,19 @@ with ui.layout_column_wrap(fill=False):
 # Chart and Table Layout
 with ui.layout_columns():
     # Market Category Chart
-    with ui.card(full_screen=True, theme="shadow"):
+    with ui.card(full_screen=True):
         ui.card_header("Market Category Distribution", class_="text-primary")
         
-        @render_plotly
+        @render.plot
         def market_category_chart():
             df_filtered = filtered_df()
             if df_filtered.empty:
-                return px.scatter(title="No data available")
-            fig = px.bar(
-                df_filtered,
-                x="Market Category",
-                title="Market Category Distribution",
-                labels={"Market Category": "Category"},
-                color_discrete_sequence=["#2ca02c"],  # Green bars
-            )
-            fig.update_layout(
-                title_font=dict(size=18, color="darkblue"),
-                xaxis_title="Market Category",
-                yaxis_title="Count",
-                template="plotly_white",
-            )
-            return fig
+                return sns.barplot(x=[], y=[])
+            sns.set(style="whitegrid")
+            return sns.countplot(data=df_filtered, x="Market Category", palette="viridis")
 
     # Stock Data Table
-    with ui.card(full_screen=True, theme="shadow"):
+    with ui.card(full_screen=True):
         ui.card_header("Filtered Stock Data", class_="text-primary")
 
         @render.data_frame
