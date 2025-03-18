@@ -13,9 +13,14 @@ from shinywidgets import render_plotly
 # Load Data
 # --------------------------------------------
 
-# Path to the dataset
-data_path = Path(__file__).parent / "docs/symbols_valid_meta.csv"
-df = pd.read_csv(data_path)
+import pandas as pd
+from pathlib import Path
+
+# Adjust path to correctly locate the CSV inside the 'docs' folder
+csv_path = Path(__file__).parent / "docs/symbols_valid_meta.csv"
+
+# Load the CSV file
+df = pd.read_csv(csv_path)
 
 # --------------------------------------------
 # Define User Interface
