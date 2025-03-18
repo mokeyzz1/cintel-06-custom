@@ -17,10 +17,12 @@ import pandas as pd
 from pathlib import Path
 
 # Adjust path to correctly locate the CSV inside the 'docs' folder
-csv_path = Path(__file__).parent / "docs/symbols_valid_meta.csv"
+csv_path = Path(__file__).parent.parent / "docs/symbols_valid_meta.csv"
 
 # Load the CSV file
 df = pd.read_csv(csv_path)
+print(f"✅ CSV file loaded successfully from: {csv_path.resolve()}")
+
 
 # --------------------------------------------
 # Define User Interface
