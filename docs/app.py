@@ -15,7 +15,7 @@ from faicons import icon_svg
 # --------------------------------------------
 
 # Path to the dataset
-data_path = Path(__file__).parent / "../data/symbols_valid_meta.csv"
+data_path = Path(__file__).parent / "../docs/symbols_valid_meta.csv"
 df = pd.read_csv(data_path)
 
 # --------------------------------------------
