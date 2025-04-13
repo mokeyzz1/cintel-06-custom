@@ -17,11 +17,16 @@ from faicons import icon_svg
 import pandas as pd
 from pathlib import Path
 
-# Adjust path to correctly locate the CSV inside the 'docs' folder
-csv_path = Path(__file__).parent / "docs/symbols_valid_meta.csv"
+import pandas as pd
 
-# Load the CSV file
-df = pd.read_csv(csv_path)
+# Use raw GitHub URL instead of local file path
+csv_url = "https://raw.githubusercontent.com/mokeyzz1/cintel-06-custom/main/docs/symbols_valid_meta.csv"
+
+try:
+    df = pd.read_csv(csv_url)
+    print("✅ CSV file loaded successfully from GitHub!")
+except Exception as e:
+    print(f"❌ ERROR loading CSV from GitHub: {e}")
 
 
 # --------------------------------------------
